@@ -187,6 +187,7 @@ Las figuras se colocan en la carpeta `figuras/` y el CSV de resumen en `figuras/
 
 FAO, (2025). *FAOSTAT — Crops and Livestock Products*. Disponible en https://www.fao.org/faostat/en/#data/QCL. Recuperado el 12 de mayo de 2026.
 
+Castañeda-Martínez, R. (2026). Importancia_hortalizas: Análisis de los datos proporcionados por la FAOSTAT sobre la importancia comercial de las hortalizas mexicanas [Software]. GitHub. https://github.com/ruben1294/Importancia_hortalizas
 
 ---
 
