@@ -12,7 +12,7 @@
 
 ![Top 15 productores mundiales de hortalizas 2023](figuras/01_top_paises_hortalizas.png)
 
-En 2023, **México fue el séptimo productor mundial de hortalizas**, con 16.5 Mt — apenas 1.4% del total mundial, pero por delante de países como Rusia, España, Italia o Japón. El panorama global está dominado por **China (600.8 Mt, > 50% del total mundial)** e India (148.5 Mt), seguidos por Estados Unidos (31.3 Mt) y Turquía (27.2 Mt).
+En 2023, **México fue el séptimo productor mundial de hortalizas**, con 16.5 Mt — apenas 1.4% del total mundial, pero por delante de países como Rusia, España, Italia o Japón. La producción global está dominada por **China (600.8 Mt, > 50% del total mundial)** e India (148.5 Mt), seguidos por Estados Unidos (31.3 Mt) y Turquía (27.2 Mt).
 
 ### 1.2 Principales hortalizas producidas en México
 
@@ -38,6 +38,12 @@ México es uno de los líderes mundiales en la producción de chile verde, lo cu
 
 En la mayoría de las hortalizas, **México supera el promedio mundial ponderado** de rendimiento. El caso más impresionante es la **cebolla**, en donde tenemos 32 t/ha contra el promedio mundial, 19 t/ha; casi **70% más productivo**. El tomate (49 contra 36 t/ha) y el pepino (54 contra 39 t/ha) también muestran ventajas claras. Sólo en **ajo, col y papa** México queda por debajo del promedio mundial.
 
+### 1.4 Valor económico en el contexto mundial
+
+![Top 15 países por valor económico de hortalizas](figuras/04_top_paises_valor.png)
+
+Por **valor económico** (conjunto QV de FAOSTAT, dólares internacionales constantes 2014–2016), **México sube al lugar #6 mundial**, un escalón arriba de su posición #7 en tonelaje. Aporta 8.2 mil millones de I\$ al valor mundial (503 mil millones de I\$), equivalente al **1.62%**. China lidera con 263 mil millones de I\$, seguida por India (62.7 mil millones).
+
 ---
 
 ## 2. ¿Qué peso tienen las hortalizas dentro del contexto nacional?
@@ -46,27 +52,49 @@ Para posicionar a las hortalizas en el contexto de la producción vegetal nacion
 
 ### 2.1 Producción por grupo de plantas (2023)
 
-![Producción por grupo de plantas en México 2023](figuras/04_grupos_plantas_mexico.png)
+![Producción por grupo de plantas en México 2023](figuras/05_grupos_plantas_mexico.png)
 
 La producción nacional está dominada por **cultivos azucareros (55.6 Mt)** y **cereales (37.0 Mt)**, después están las **frutas (26.1 Mt)** y las **hortalizas (16.5 Mt)**.
 
 ### 2.2 Evolución de los grandes grupos
 
-![Evolución de la producción por grupo](figuras/05_grupos_evolucion.png)
+![Evolución de la producción por grupo](figuras/06_grupos_evolucion.png)
 
 El crecimiento más acelerado en rendimiento se ha visto en las **hortalizas (+93%)** y las **frutas (+75%)**, las leguminosas incluso redujeron su producción en 23%.
 
 ### 2.3 Top 20 cultivos individuales
 
-![Top 20 cultivos individuales en México 2023](figuras/06_top20_cultivos_mexico.png)
+![Top 20 cultivos individuales en México 2023](figuras/07_top20_cultivos_mexico.png)
 
-Cinco de nuestras once hortalizas están en el *top* 20 nacional: tomate (#5), chile verde (#6), papa (#12), cebolla (#13) y pepino (#20). Esto es notable porque compiten contra cultivos extensivos como la caña, el maíz, el sorgo y los frutales mayores (cítricos, mango, plátano, aguacate). El tomate, en particular, **supera en producción al trigo y al aguacate**.
+Cinco de nuestras once hortalizas están en el *top* 20 nacional: tomate (#5), chile verde (#6), papa (#12), cebolla (#13) y pepino (#20). Esto es interesante porque compiten contra cultivos extensivos como la caña, el maíz, el sorgo y los frutales mayores (cítricos, mango, plátano, aguacate). El tomate, en particular, **supera en producción al trigo y al aguacate**.
+
+### 2.4 Tonelaje contra valor económico
+
+![Contraste tonelaje vs valor por grupo de plantas en México](figuras/08_grupos_tonelaje_vs_valor.png)
+
+Al medir por valor económico (I\$ constantes 2014–2016), los cultivos azucareros, primeros en tonelaje, son los últimos en valor.
+
+| Grupo | Tonelaje 2023 (Mt) | Valor 2023 (mil mill I\$) | Valor por tonelada (I\$/t) |
+|---|---:|---:|---:|
+| Frutas | 26.1 | **14.6** | ~559 |
+| **Hortalizas** | **16.5** | **8.2** | **~494** |
+| Cereales | 37.0 | 7.7 | ~207 |
+| Cultivos azucareros | 55.6 | 2.5 | ~45 |
+| Raíces y tubérculos | 2.3 | 0.6 | ~252 |
+
+Una tonelada de hortalizas vale en promedio **11 veces más** que una tonelada de caña de azúcar, y más del doble que una tonelada de cereal.
+
+### 2.5 *Ranking* económico de las hortalizas en México
+
+![Valor económico por hortaliza en México 2023](figuras/09_valor_por_hortaliza_mexico.png)
+
+Por valor económico, el **chile verde adelanta al tomate** como la hortaliza más valiosa: 2.47 mil millones de I\$ contra 2.09 mil millones del tomate. Esto a pesar de que el tomate produce más toneladas (4.39 Mt contra 3.68 Mt); el chile tiene un precio implícito por tonelada mayor (~671 I\$/t vs ~476 I\$/t).
 
 ---
 
 ## 3. Producción anual de las 11 hortalizas (2000–2023)
 
-![Producción anual de hortalizas en México](figuras/07_produccion_lineas.png)
+![Producción anual de hortalizas en México](figuras/10_produccion_lineas.png)
 
 La gráfica de líneas evidencia la **dominancia del tomate**: en el año 2000 tenía una producción de ~2.6 Mt en, y para 2023 alcanza las **4.39 Mt**, con una tendencia claramente ascendente. Después está el chile verde, con un crecimiento notable a partir de 2014.
 
@@ -76,7 +104,7 @@ Por debajo, la papa y la cebolla tienen crecimientos sostenidos pero más modera
 
 ## 4. *Ranking* en el año más reciente disponible (2023)
 
-![Ranking de hortalizas mexicanas por producción 2023](figuras/08_ranking_reciente.png)
+![Ranking de hortalizas mexicanas por producción 2023](figuras/11_ranking_reciente.png)
 
 El tomate y el chile verde tuvieron, en 2023, casi **8.1 Mt**; más que las otras nueve hortalizas combinadas. La papa y la cebolla están en tercer lugar, con casi 1.9 Mt cada una, y el pepino es la quinta hortaliza más producida.
 
@@ -86,7 +114,7 @@ El tomate y el chile verde tuvieron, en 2023, casi **8.1 Mt**; más que las otra
 
 ## 5. Participación relativa en las hortalizas nacionales
 
-![Participación relativa de cada hortaliza](figuras/09_participacion_apilada.png)
+![Participación relativa de cada hortaliza](figuras/12_participacion_apilada.png)
 
 El gráfico apilado nos permite ver cómo se reparte cada año la producción dentro del grupo de hortalizas analizadas. El tomate aporta entre el 30 y 40% de cada año, el chile verde representa el 22-27%. México concentra su producción de hortalizas en tomate, chile, papa y cebolla, y no se observa una sustitución entre cultivos a lo largo de los años.
 
@@ -94,17 +122,17 @@ El gráfico apilado nos permite ver cómo se reparte cada año la producción de
 
 ## 6. Rendimiento (productividad por hectárea)
 
-![Evolución del rendimiento](figuras/10_rendimiento_lineas.png)
+![Evolución del rendimiento](figuras/13_rendimiento_lineas.png)
 
 El **pepino es el cultivo de mayor productividad por unidad de superficie**, con un pico cercano a **75 t/ha en 2019–2020**. El tomate también muestra un salto sostenido, pasando de ~22 t/ha a casi 50 t/ha. Estos saltos en rendimiento son la clave que explica por qué la producción se ha duplicado mientras la superficie cosechada apenas crece.
 
-En el otro extremo, el espárrago y el ajo presentan rendimientos modestos (< 15 t/ha), **posiblemente** atribuibles a la naturaleza biológica de estos cultivos, no por deficiencias agronómicas.
+En el otro extremo, el espárrago y el ajo presentan rendimientos modestos (< 15 t/ha), posiblemente atribuibles a la naturaleza biológica de estos cultivos, no por deficiencias agronómicas.
 
 ---
 
 ## 7. Cultivos de gran extensión contra cultivos intensivos
 
-![Área cosechada vs. rendimiento 2023](figuras/11_area_vs_rendimiento.png)
+![Área cosechada vs. rendimiento 2023](figuras/14_area_vs_rendimiento.png)
 
 El tamaño del círculo indica la producción total del cultivo. Este gráfico de burbujas en 2023 confirma que el tomate y el chile verde son las dos hortalizas más cultivadas en México.
 
@@ -112,7 +140,7 @@ El tamaño del círculo indica la producción total del cultivo. Este gráfico d
 
 ## 8. Crecimiento porcentual de la producción (2000–2002 vs. 2021–2023)
 
-![Crecimiento de la producción](figuras/12_crecimiento_porcentual.png)
+![Crecimiento de la producción](figuras/15_crecimiento_porcentual.png)
 
 Comparando los promedios de los tres primeros años con los de los tres últimos, todos los cultivos crecieron, pero a velocidades diferentes:
 
@@ -126,20 +154,7 @@ México pasó de ser un productor menor de **espárrago**, a ser **uno de los pr
 
 ---
 
-## 9. Mapa de calor
-
-![Mapa de calor de producción anual](figuras/13_heatmap_produccion.png)
-
-El mapa de calor muestra las once hortalizas y los 24 años analizados. Nos permite identificar:
-
-- La expansión continua del tomate.
-- El despegue del chile verde a partir de 2014.
-- La caída de 2011 en tomate y chile.
-- La estabilidad histórica del ajo y la col.
-
----
-
-## 10. Tabla resumen
+## 9. Tabla resumen
 
 | Hortaliza | Producción promedio (t) | Área promedio (ha) | Rendimiento promedio (t/ha) | Producción 2023 (t) |
 |---|---:|---:|---:|---:|
@@ -159,9 +174,9 @@ La versión completa con columnas adicionales está en `figuras/tabla_resumen_ho
 
 ---
 
-## 11. Discusiones
+## 10. Discusiones
 
-Podemos agrupar a las hortalizas mexicanas en dos grupos. Por un lado, los cultivos de alto valor de exportación (tomate, pepino, espárrago y brócoli) que han multiplicado su productividad y han llevado al país a colocarse entre los primeros del mundo en su categoría; y por otro, aquellos cultivos de fuerte arraigo cultural y social (chile, cebolla, papa, calabaza y ajo), que son una parte muy importante de la dieta nacional.
+Podemos agrupar a las hortalizas mexicanas en dos grupos. Por un lado, los cultivos de alto valor de exportación (tomate, pepino, espárrago y brócoli) que han multiplicado su productividad y han llevado al país a colocarse entre los primeros del mundo en su categoría; y por otro, aquellos cultivos de mucha importancia cultural y social (chile, cebolla, papa, calabaza y ajo), que además son una parte importante de la dieta mexicana.
 
 
 ## 11. Conclusiones

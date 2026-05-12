@@ -130,36 +130,43 @@ FIG_DIR = BASE_DIR / "figuras"
 FIG_DIR.mkdir(exist_ok=True)
 
 CONTINENTS = ["Americas", "Asia", "Europe", "Africa", "Oceania"]
-DATA_URL_TEMPLATE = (
-    "https://bulks-faostat.fao.org/production/"
-    "Production_Crops_Livestock_E_{continent}.zip"
-)
+DATASETS = {
+    # nombre lógico -> (prefijo del archivo, URL template)
+    "QCL": ("Production_Crops_Livestock_E_{continent}",
+            "https://bulks-faostat.fao.org/production/"
+            "Production_Crops_Livestock_E_{continent}.zip"),
+    "QV":  ("Value_of_Production_E_{continent}",
+            "https://bulks-faostat.fao.org/production/"
+            "Value_of_Production_E_{continent}.zip"),
+}
 
 
-def _continent_csv(continent):
-    return DATA_DIR / f"Production_Crops_Livestock_E_{continent}_NOFLAG.csv"
+def _continent_csv(continent, dataset="QCL"):
+    prefix = DATASETS[dataset][0].format(continent=continent)
+    return DATA_DIR / f"{prefix}_NOFLAG.csv"
 
 
 def ensure_data():
-    """Descarga + descomprime los bulks de FAOSTAT (todos los continentes)."""
+    """Descarga + descomprime los bulks de FAOSTAT (QCL y QV, todos los continentes)."""
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    for continent in CONTINENTS:
-        csv_path = _continent_csv(continent)
-        if csv_path.exists():
-            continue
-        url = DATA_URL_TEMPLATE.format(continent=continent)
-        zip_path = DATA_DIR / f"Production_Crops_Livestock_E_{continent}.zip"
-        print(f"[setup] Descargando {continent} de FAOSTAT ({url}) ...")
-        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(req) as resp, open(zip_path, "wb") as out:
-            out.write(resp.read())
-        print(f"[setup] Descomprimiendo {zip_path.name} ...")
-        with zipfile.ZipFile(zip_path) as zf:
-            zf.extractall(DATA_DIR)
-        if not csv_path.exists():
-            raise FileNotFoundError(
-                f"No se encontró {csv_path} después de descomprimir el ZIP."
-            )
+    for dataset, (prefix_tpl, url_tpl) in DATASETS.items():
+        for continent in CONTINENTS:
+            csv_path = _continent_csv(continent, dataset)
+            if csv_path.exists():
+                continue
+            url = url_tpl.format(continent=continent)
+            zip_path = DATA_DIR / f"{prefix_tpl.format(continent=continent)}.zip"
+            print(f"[setup] Descargando {dataset} {continent} ({url}) ...")
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req) as resp, open(zip_path, "wb") as out:
+                out.write(resp.read())
+            print(f"[setup] Descomprimiendo {zip_path.name} ...")
+            with zipfile.ZipFile(zip_path) as zf:
+                zf.extractall(DATA_DIR)
+            if not csv_path.exists():
+                raise FileNotFoundError(
+                    f"No se encontró {csv_path} después de descomprimir el ZIP."
+                )
 
 MEXICO_AREA_CODE = 138
 YEAR_START, YEAR_END = 2000, 2023
@@ -169,6 +176,8 @@ EL_PROD = 5510   # Production (t)
 EL_AREA = 5312   # Area harvested (ha)
 EL_YIELD = 5412  # Yield (kg/ha) in the 2025 FAOSTAT release -> convert to t/ha by /1000
                  # (the historical code 5419 used hg/ha but is no longer published for crops)
+EL_VALUE = 152   # Gross Production Value (constant 2014-2016 thousand International $)
+                 # Comparable entre países y años (PPP-ajustado).
 
 # Target crops: (FAOSTAT Item Code, Spanish name)
 # Nota: la papa (Solanum tuberosum) se incluye en uso común como hortaliza
@@ -289,7 +298,7 @@ def plot_production_lines(prod_wide):
     ax.grid(True, alpha=0.3)
     fig.text(0.01, -0.02, "Fuente: FAOSTAT (FAO, 2025) · conjunto QCL",
              fontsize=8, color="grey")
-    fig.savefig(FIG_DIR / "07_produccion_lineas.png")
+    fig.savefig(FIG_DIR / "10_produccion_lineas.png")
     plt.close(fig)
 
 
@@ -309,7 +318,7 @@ def plot_recent_ranking(prod_wide, year):
     ax.set_xlim(0, max(series.values) * 1.15)
     fig.text(0.01, -0.02, "Fuente: FAOSTAT (FAO, 2025) · conjunto QCL",
              fontsize=8, color="grey")
-    fig.savefig(FIG_DIR / "08_ranking_reciente.png")
+    fig.savefig(FIG_DIR / "11_ranking_reciente.png")
     plt.close(fig)
 
 
@@ -329,7 +338,7 @@ def plot_yield_evolution(yield_wide):
     bold_legend_title(leg)
     fig.text(0.01, -0.02, "Fuente: FAOSTAT (FAO, 2025) · conjunto QCL",
              fontsize=8, color="grey")
-    fig.savefig(FIG_DIR / "10_rendimiento_lineas.png")
+    fig.savefig(FIG_DIR / "13_rendimiento_lineas.png")
     plt.close(fig)
 
 
@@ -354,7 +363,7 @@ def plot_share_stacked(prod_wide):
     bold_legend_title(leg)
     fig.text(0.01, -0.02, "Fuente: FAOSTAT (FAO, 2025) · conjunto QCL",
              fontsize=8, color="grey")
-    fig.savefig(FIG_DIR / "09_participacion_apilada.png")
+    fig.savefig(FIG_DIR / "12_participacion_apilada.png")
     plt.close(fig)
 
 
@@ -381,7 +390,7 @@ def plot_area_vs_yield(area_wide, yield_wide, prod_wide, year):
     ax.grid(True, alpha=0.3)
     fig.text(0.01, -0.02, "Fuente: FAOSTAT (FAO, 2025) · conjunto QCL",
              fontsize=8, color="grey")
-    fig.savefig(FIG_DIR / "11_area_vs_rendimiento.png")
+    fig.savefig(FIG_DIR / "14_area_vs_rendimiento.png")
     plt.close(fig)
 
 
@@ -404,24 +413,7 @@ def plot_growth_bars(prod_wide):
     ax.set_xlim(min(0, growth.min() * 1.2), growth.max() * 1.18)
     fig.text(0.01, -0.02, "Fuente: FAOSTAT (FAO, 2025) · conjunto QCL",
              fontsize=8, color="grey")
-    fig.savefig(FIG_DIR / "12_crecimiento_porcentual.png")
-    plt.close(fig)
-
-
-def plot_heatmap(prod_wide):
-    """Heatmap: crop x year, value = production (Mt)."""
-    data = (prod_wide / 1e6).T
-    data = data.loc[data.mean(axis=1).sort_values(ascending=False).index]
-    fig, ax = plt.subplots(figsize=(13, 6))
-    sns.heatmap(data, cmap="YlGnBu", linewidths=0.3, linecolor="white",
-                cbar_kws={"label": "Producción (millones de t)"},
-                ax=ax, annot=False)
-    ax.set_title(f"Mapa de calor de la producción anual por hortaliza ({YEAR_START}–{YEAR_END})")
-    ax.set_xlabel("Año")
-    ax.set_ylabel("")
-    fig.text(0.01, -0.02, "Fuente: FAOSTAT (FAO, 2025) · conjunto QCL",
-             fontsize=8, color="grey")
-    fig.savefig(FIG_DIR / "13_heatmap_produccion.png")
+    fig.savefig(FIG_DIR / "15_crecimiento_porcentual.png")
     plt.close(fig)
 
 
@@ -504,7 +496,7 @@ def plot_groups_ranking(groups_wide, year):
     fig.text(0.01, -0.02,
              "Fuente: FAOSTAT (FAO, 2025) · conjunto QCL · agregados oficiales",
              fontsize=8, color="grey")
-    fig.savefig(FIG_DIR / "04_grupos_plantas_mexico.png")
+    fig.savefig(FIG_DIR / "05_grupos_plantas_mexico.png")
     plt.close(fig)
 
 
@@ -526,7 +518,7 @@ def plot_groups_evolution(groups_wide):
     fig.text(0.01, -0.02,
              "Fuente: FAOSTAT (FAO, 2025) · conjunto QCL · agregados oficiales",
              fontsize=8, color="grey")
-    fig.savefig(FIG_DIR / "05_grupos_evolucion.png")
+    fig.savefig(FIG_DIR / "06_grupos_evolucion.png")
     plt.close(fig)
 
 
@@ -609,7 +601,7 @@ def plot_top20_crops_mexico(year):
     bold_legend_title(leg)
     fig.text(0.01, -0.01, "Fuente: FAOSTAT (FAO, 2025) · conjunto QCL",
              fontsize=8, color="grey")
-    fig.savefig(FIG_DIR / "06_top20_cultivos_mexico.png")
+    fig.savefig(FIG_DIR / "07_top20_cultivos_mexico.png")
     plt.close(fig)
 
 
@@ -804,6 +796,134 @@ def plot_mexico_vs_world_yield(year):
 
 
 # --------------------------------------------------------------------------- #
+# 3-QUATER. VALOR DE PRODUCCIÓN (conjunto QV)                                 #
+# --------------------------------------------------------------------------- #
+def load_world_value(item_codes, year):
+    """Devuelve DataFrame con Area, Item Code, valor (un año, varios items)."""
+    frames = []
+    year_col = f"Y{year}"
+    for cont in CONTINENTS:
+        df = pd.read_csv(_continent_csv(cont, "QV"), encoding="utf-8",
+                         usecols=["Area Code", "Area", "Item Code", "Item",
+                                  "Element Code", year_col])
+        df = df[(df["Element Code"] == EL_VALUE) &
+                (df["Item Code"].isin(item_codes))]
+        frames.append(df)
+    out = pd.concat(frames, ignore_index=True)
+    out = _country_filter(out)
+    return out.rename(columns={year_col: "value"})
+
+
+def plot_world_value_ranking(year, top_n=15):
+    """Top N países por valor económico de hortalizas (constant I$, agregado 1735)."""
+    df = load_world_value({1735}, year).dropna(subset=["value"])
+    df = df[df["Area"] != "China"]
+    df = df.sort_values("value", ascending=False).reset_index(drop=True)
+    df["rank"] = df.index + 1
+    mex_row = df[df["Area Code"] == MEXICO_AREA_CODE].iloc[0]
+    top = df.head(top_n).copy()
+    if mex_row["rank"] > top_n:
+        top = pd.concat([top, mex_row.to_frame().T], ignore_index=True)
+    top = top.iloc[::-1]
+    labels = [_es_country(a) for a in top["Area"]]
+    colors = ["#d62728" if a == "Mexico" else "#1f9e89" for a in top["Area"]]
+    fig, ax = plt.subplots(figsize=(11, 7))
+    # valor está en miles de I$; convertir a miles de millones (billion I$) -> dividir por 1e6
+    vals = top["value"].astype(float) / 1e6
+    bars = ax.barh(labels, vals, color=colors, edgecolor="black", linewidth=0.4)
+    for bar, v in zip(bars, vals):
+        ax.text(v + max(vals) * 0.01,
+                bar.get_y() + bar.get_height() / 2,
+                f"{v:,.1f}", va="center", fontsize=8.5)
+    ax.set_title(f"Top {top_n} países por valor económico de hortalizas ({year})")
+    ax.set_xlabel("Valor bruto de producción (miles de millones de I$ constantes 2014-2016)")
+    fig.text(0.01, -0.02,
+             "Fuente: FAOSTAT (FAO, 2025) · conjunto QV · agregado 'Vegetables Primary' · "
+             "I$ = International Dollar PPP",
+             fontsize=8, color="grey")
+    fig.savefig(FIG_DIR / "04_top_paises_valor.png")
+    plt.close(fig)
+    return mex_row["rank"], df["value"].sum(), mex_row["value"]
+
+
+def plot_mexico_groups_tonnage_vs_value(year):
+    """Contraste: tonelaje vs valor económico por grupo de plantas en México."""
+    # Tonelaje
+    qcl = pd.read_csv(_continent_csv("Americas", "QCL"), encoding="utf-8")
+    qcl_mex = qcl[(qcl["Area Code"] == MEXICO_AREA_CODE) &
+                  (qcl["Element Code"] == EL_PROD) &
+                  (qcl["Item Code"].isin(PLANT_GROUPS))]
+    tonnage = qcl_mex.set_index("Item Code")[f"Y{year}"] / 1e6   # Mt
+
+    # Valor
+    qv = pd.read_csv(_continent_csv("Americas", "QV"), encoding="utf-8")
+    qv_mex = qv[(qv["Area Code"] == MEXICO_AREA_CODE) &
+                (qv["Element Code"] == EL_VALUE) &
+                (qv["Item Code"].isin(PLANT_GROUPS))]
+    value = qv_mex.set_index("Item Code")[f"Y{year}"] / 1e6      # miles de mill I$
+
+    data = pd.DataFrame({"Tonelaje (Mt)": tonnage, "Valor (mil mill I$)": value}).dropna()
+    data.index = [PLANT_GROUPS[c][0] for c in data.index]
+    # Ordenar por valor
+    data = data.sort_values("Valor (mil mill I$)", ascending=True)
+
+    fig, ax = plt.subplots(figsize=(12, 7))
+    y_pos = np.arange(len(data))
+    h = 0.4
+    ax.barh(y_pos + h/2, data["Valor (mil mill I$)"], h,
+            label="Valor (mil millones de I$)",
+            color="#1f9e89", edgecolor="black", linewidth=0.3)
+    ax.barh(y_pos - h/2, data["Tonelaje (Mt)"], h,
+            label="Producción (millones de toneladas)",
+            color="#f39c12", edgecolor="black", linewidth=0.3)
+    for i, (v, t) in enumerate(zip(data["Valor (mil mill I$)"], data["Tonelaje (Mt)"])):
+        ax.text(v, i + h/2, f"  {v:,.1f}", va="center", fontsize=9)
+        ax.text(t, i - h/2, f"  {t:,.1f}", va="center", fontsize=9)
+    ax.set_yticks(y_pos)
+    ax.set_yticklabels(data.index)
+    ax.set_title(f"Contraste tonelaje vs valor económico por grupo de plantas en México ({year})")
+    ax.set_xlabel("Producción (Mt) · Valor (miles de millones de I$ constantes 2014-2016)")
+    ax.set_xlim(0, max(data.max()) * 1.18)
+    leg = ax.legend(loc="lower right", frameon=True, title="Métrica")
+    bold_legend_title(leg)
+    fig.text(0.01, -0.02,
+             "Fuentes: FAOSTAT (FAO, 2025) · conjuntos QCL y QV · I$ = International Dollar PPP",
+             fontsize=8, color="grey")
+    fig.savefig(FIG_DIR / "08_grupos_tonelaje_vs_valor.png")
+    plt.close(fig)
+    return data
+
+
+def plot_value_by_crop_mexico(year):
+    """Valor económico de cada hortaliza objetivo en México."""
+    qv = pd.read_csv(_continent_csv("Americas", "QV"), encoding="utf-8")
+    mex = qv[(qv["Area Code"] == MEXICO_AREA_CODE) &
+             (qv["Element Code"] == EL_VALUE) &
+             (qv["Item Code"].isin(TARGET_CROPS))]
+    value = mex.set_index("Item Code")[f"Y{year}"] / 1e6   # mil mill I$
+    value.index = [TARGET_CROPS[c][0] for c in value.index]
+    value = value.dropna().sort_values(ascending=True)
+
+    fig, ax = plt.subplots(figsize=(10, 7))
+    bars = ax.barh(value.index, value.values,
+                   color=colors_for(value.index),
+                   edgecolor="black", linewidth=0.4)
+    for bar, v in zip(bars, value.values):
+        ax.text(v + max(value.values) * 0.01,
+                bar.get_y() + bar.get_height() / 2,
+                f"{v:,.2f}", va="center", fontsize=9)
+    ax.set_title(f"Valor económico de cada hortaliza producida en México ({year})")
+    ax.set_xlabel("Valor bruto de producción (miles de millones de I$ constantes 2014-2016)")
+    ax.set_xlim(0, max(value.values) * 1.18)
+    fig.text(0.01, -0.02,
+             "Fuente: FAOSTAT (FAO, 2025) · conjunto QV · I$ = International Dollar PPP",
+             fontsize=8, color="grey")
+    fig.savefig(FIG_DIR / "09_valor_por_hortaliza_mexico.png")
+    plt.close(fig)
+    return value
+
+
+# --------------------------------------------------------------------------- #
 # MAIN                                                                        #
 # --------------------------------------------------------------------------- #
 def main():
@@ -851,7 +971,6 @@ def main():
     plot_yield_evolution(yield_wide)
     plot_area_vs_yield(area_wide, yield_wide, prod_wide, recent_year)
     plot_growth_bars(prod_wide)
-    plot_heatmap(prod_wide)
 
     # Tabla resumen
     summary = build_summary(long, recent_year)
@@ -864,6 +983,21 @@ def main():
     for i, row in enumerate(top5.itertuples(index=False), start=1):
         print(f"{i}. {row[0]:<22} ({row[1]:<32}): "
               f"{row[2]/1e6:.2f} Mt promedio · {row[5]/1e6:.2f} Mt en {recent_year}")
+
+    # 14–16 · Valor económico (conjunto QV)
+    print("\n=== Figuras 14–16: valor económico de la producción ===")
+    val_rank, val_world, val_mex = plot_world_value_ranking(recent_year)
+    print(f"México ocupa el lugar #{int(val_rank)} mundial por VALOR de producción hortícola")
+    print(f"  · Valor mundial total ({recent_year}): {val_world/1e6:,.1f} mil mill I$")
+    print(f"  · Valor de México   ({recent_year}): {val_mex/1e6:,.1f} mil mill I$ "
+          f"({val_mex/val_world*100:.2f}% mundial)")
+    groups_cmp = plot_mexico_groups_tonnage_vs_value(recent_year)
+    print("\nGrupos de plantas en México — tonelaje vs valor:")
+    print(groups_cmp.to_string())
+    crop_value = plot_value_by_crop_mexico(recent_year)
+    print("\nValor por hortaliza en México (mil mill I$):")
+    for crop in crop_value.sort_values(ascending=False).index:
+        print(f"  · {crop:<22} {crop_value[crop]:6.3f}")
 
     print(f"\nFiguras guardadas en: {FIG_DIR}")
     print(f"CSV guardado en:      {FIG_DIR / 'tabla_resumen_hortalizas.csv'}")
